@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://postgres:5432/postgres"
+    username: "postgres"
+    password: "postgres"
+    driver-class-name: "org.postgresql.Driver"
+
+security:
+  jwt:
+    token:
+      secret-key: secret-key
+      expire-length: 3000000 # 50 minutes expiration time

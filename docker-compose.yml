@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - '8080:8080'
+    depends_on:
+        - "postgres"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - '8081:8081'
+    depends_on:
+      - "backend"
+
+  nginx:
+    container_name: nginx
+    image: proxy
+    build: ./.nginx
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - 80:80
+      - 443:443
